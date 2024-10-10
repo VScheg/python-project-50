@@ -3,22 +3,23 @@ import json
 
 
 def generate_diff(file_path1, file_path2):
-    dict1 = json.load(open(file_path1))
-    dict2 = json.load(open(file_path2))
-    sorted_dict1 = dict(sorted(dict1.items()))
-    sorted_dict2 = dict(sorted(dict2.items()))
-    lines = []
-    for k1, v1 in sorted_dict1.items():
-        if k1 in sorted_dict2 and sorted_dict2[k1] == v1:
-            lines.append(' ' * 4 + f'{k1}: {v1}')
-        elif k1 not in sorted_dict2.keys():
-            lines.append(' ' * 2 + f'- {k1}: {v1}')
+    data1 = json.load(open(file_path1))
+    data2 = json.load(open(file_path2))
+    keys = data1.keys() | data2.keys()
+    result = {}
+    for key in keys:
+        if key not in data1:
+            result[f'+ {key}'] = data2[key]
+        elif key not in data2:
+            result[f'- {key}'] = data1[key]
+        elif data1[key] == data2[key]:
+            result[f'  {key}'] = data1[key]
         else:
-            lines.append(' ' * 2 + f'- {k1}: {v1}')
-            lines.append(' ' * 2 + f'+ {k1}: {sorted_dict2[k1]}')
-    for k2, v2 in sorted_dict2.items():
-        if k2 not in sorted_dict1.keys():
-            lines.append(' ' * 2 + f'+ {k2}: {v2}')
-
+            result[f'- {key}'] = data1[key]
+            result[f'+ {key}'] = data2[key]
+    result = dict(sorted(result.items(), key=lambda x: x[0][2:]))
+    lines = []
+    for k, v in result.items():
+        lines.append(f'  {k}: {v}')
     result = itertools.chain('{', lines, '}')
     return '\n'.join(result).lower()
