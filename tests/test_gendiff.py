@@ -16,6 +16,7 @@ def read(file_path):
 def test_generate_diff():
     expected = read(get_fixture_path('result1.txt'))
     assert generate_diff(get_fixture_path('file1.json'), get_fixture_path('file2.json')) == expected
+    assert generate_diff(get_fixture_path('file1.yaml'), get_fixture_path('file2.yml')) == expected
 
     expected = read(get_fixture_path('result2.txt'))
     assert generate_diff(get_fixture_path('file1.json'), get_fixture_path('file3.json')) == expected
