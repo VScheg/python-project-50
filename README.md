@@ -10,3 +10,5 @@
 [![asciicast](https://asciinema.org/a/rWfO6hJaPnLCEkELpgX49kXVS.svg)](https://asciinema.org/a/rWfO6hJaPnLCEkELpgX49kXVS)
 ### Comparing flat YAML files
 [![asciicast](https://asciinema.org/a/IleCvrj7eSsrbaHUhoKo6HY6y.svg)](https://asciinema.org/a/IleCvrj7eSsrbaHUhoKo6HY6y)
+### Comparing nested files
+[![asciicast](https://asciinema.org/a/HllZSebiZObKmdiKKnvDziLue.svg)](https://asciinema.org/a/HllZSebiZObKmdiKKnvDziLue)
