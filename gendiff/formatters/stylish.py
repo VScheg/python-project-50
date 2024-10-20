@@ -3,6 +3,10 @@ from ..stringify import stringify
 
 
 def make_stylish(file1, file2):
+    return to_json(stringify(make_dict(file1, file2)))
+
+
+def make_dict(file1, file2):
 
     def inner(data1, data2):
         if not isinstance(data1, dict):
@@ -22,4 +26,4 @@ def make_stylish(file1, file2):
 
         return dict(sorted(result.items(), key=lambda x: x[0][2:]))
 
-    return to_json(stringify(inner(file1, file2)))
+    return inner(file1, file2)

@@ -14,3 +14,5 @@
 [![asciicast](https://asciinema.org/a/HllZSebiZObKmdiKKnvDziLue.svg)](https://asciinema.org/a/HllZSebiZObKmdiKKnvDziLue)
 ### Comparing nested files using plain view
 [![asciicast](https://asciinema.org/a/U8ZITS8RCSlt1Rwy49ZWiTc6F.svg)](https://asciinema.org/a/U8ZITS8RCSlt1Rwy49ZWiTc6F)
+### Comparing nested files using json view
+[![asciicast](https://asciinema.org/a/gz9dF9enTu3yl6gAeWbWJxXHL.svg)](https://asciinema.org/a/gz9dF9enTu3yl6gAeWbWJxXHL)

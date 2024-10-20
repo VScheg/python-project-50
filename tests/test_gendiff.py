@@ -44,3 +44,10 @@ def test_plain_nested():
     assert generate_diff(get_dict('nested1.json'), get_dict('nested2.json'), 'plain') == expected
     assert generate_diff(get_dict('nested1.yml'), get_dict('nested2.yml'), 'plain') == expected
     assert generate_diff(get_dict('nested1.yml'), get_dict('nested2.json'), 'plain') == expected
+
+
+def test_json_nested():
+    expected = read(get_fixture_path('json_nested_result.txt'))
+    assert generate_diff(get_dict('nested1.json'), get_dict('nested2.json'), 'json') == expected
+    assert generate_diff(get_dict('nested1.yml'), get_dict('nested2.yml'), 'json') == expected
+    assert generate_diff(get_dict('nested1.yml'), get_dict('nested2.json'), 'json') == expected
