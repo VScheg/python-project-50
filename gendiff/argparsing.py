@@ -14,5 +14,5 @@ def get_arguments():
     arguments = [parse(args.first_file), parse(args.second_file)]
     if args.format:
         arguments.append(args.format)
-    
+
     return arguments

@@ -1,5 +1,5 @@
-from .parsing import to_json
-from .stringify import stringify
+from ..parsing import to_json
+from ..stringify import stringify
 
 
 def make_stylish(file1, file2):
@@ -17,10 +17,9 @@ def make_stylish(file1, file2):
             elif data1[key] == data2[key] or isinstance(data2[key], dict):
                 result[f'  {key}'] = inner(data1[key], data2[key])
             else:
-               result[f'- {key}'] = inner(data1[key], data1[key])
-               result[f'+ {key}'] = inner(data2[key], data2[key])
+                result[f'- {key}'] = inner(data1[key], data1[key])
+                result[f'+ {key}'] = inner(data2[key], data2[key])
 
-        sorted_result = dict(sorted(result.items(), key=lambda x: x[0][2:]))
-        return sorted_result
+        return dict(sorted(result.items(), key=lambda x: x[0][2:]))
 
     return to_json(stringify(inner(file1, file2)))
