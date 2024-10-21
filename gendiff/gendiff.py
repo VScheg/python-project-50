@@ -1,9 +1,11 @@
 from .formatters import make_stylish, make_plain
 import json
+from gendiff.parsing import parse
 
 
-def generate_diff(file1, file2, format_name='stylish'):
-
+def generate_diff(file_path1, file_path2, format_name='stylish'):
+    file1 = parse(file_path1)
+    file2 = parse(file_path2)
     def inner(data1, data2=None):
 
         if not isinstance(data1, dict) and isinstance(data2, dict):
