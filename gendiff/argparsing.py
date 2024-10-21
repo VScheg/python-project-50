@@ -1,5 +1,4 @@
 import argparse
-from .parsing import parse
 
 
 def get_arguments():
@@ -11,7 +10,7 @@ def get_arguments():
     parser.add_argument("second_file")
     parser.add_argument("-f", "--format", help="set format of output")
     args = parser.parse_args()
-    arguments = [parse(args.first_file), parse(args.second_file)]
+    arguments = [args.first_file, args.second_file]
     if args.format:
         arguments.append(args.format)
 
