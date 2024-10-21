@@ -1,29 +1,46 @@
-from ..parsing import to_json
-from ..stringify import stringify
+from gendiff.parsing import to_json
+import itertools
 
 
-def make_stylish(file1, file2):
-    return to_json(stringify(make_dict(file1, file2)))
+def make_stylish(dictionary):
+    return to_json(stringify(dictionary))
 
 
-def make_dict(file1, file2):
+def stringify(value, replacer=' ', spaces_count=2):
 
-    def inner(data1, data2):
-        if not isinstance(data1, dict):
-            return data1
-        keys = data1.keys() | data2.keys()
-        result = {}
-        for key in keys:
-            if key not in data1:
-                result[f'+ {key}'] = inner(data2[key], data2[key])
-            elif key not in data2:
-                result[f'- {key}'] = inner(data1[key], data1[key])
-            elif data1[key] == data2[key] or isinstance(data2[key], dict):
-                result[f'  {key}'] = inner(data1[key], data2[key])
+    def iter_(current_value, depth):
+        if not isinstance(current_value, dict):
+            return str(current_value)
+
+        if depth == 0:
+            deep_indent_size = depth + spaces_count
+            current_indent = ''
+        else:
+            deep_indent_size = depth + 4
+            current_indent = replacer * (depth + 2)
+
+        deep_indent = replacer * deep_indent_size
+        lines = []
+        for key, val in current_value.items():
+            if isinstance(val, dict) and 'status' in val.keys():
+                status = val.pop('status')
+                if status == 'added':
+                    value = val['value']
+                    lines.append(f'{deep_indent}+ {key}: {iter_(value, deep_indent_size)}')
+                elif status == 'removed':
+                    value = val['value']
+                    lines.append(f'{deep_indent}- {key}: {iter_(value, deep_indent_size)}')
+                elif status == 'no change':
+                    value = val['value']
+                    lines.append(f'{deep_indent}  {key}: {iter_(value, deep_indent_size)}')
+                elif status == 'updated':
+                    old_val = val['old value']
+                    new_val = val['new value']
+                    lines.append(f'{deep_indent}- {key}: {iter_(old_val, deep_indent_size)}')
+                    lines.append(f'{deep_indent}+ {key}: {iter_(new_val, deep_indent_size)}')
             else:
-                result[f'- {key}'] = inner(data1[key], data1[key])
-                result[f'+ {key}'] = inner(data2[key], data2[key])
+                lines.append(f'{deep_indent}  {key}: {iter_(val, deep_indent_size)}')
+        result = itertools.chain("{", lines, [current_indent + "}"])
+        return '\n'.join(result)
 
-        return dict(sorted(result.items(), key=lambda x: x[0][2:]))
-
-    return inner(file1, file2)
+    return iter_(value, 0)

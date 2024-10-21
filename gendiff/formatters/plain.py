@@ -1,36 +1,35 @@
 from gendiff.parsing import to_json
-from gendiff.plainify import plain_stringify
 
 
-def make_plain(file1, file2):
+NONSTRINGS = [True, False, None, '[complex value]']
 
-    def inner(data1, data2=None):
 
-        if not isinstance(data1, dict) and isinstance(data2, dict):
-            return data1, '[complex value]'
-        elif isinstance(data1, dict) and not isinstance(data2, dict):
-            return '[complex value]', data2
-        elif not isinstance(data1, dict) and not isinstance(data2, dict):
-            return data1, data2
+def make_plain(dictionary):
+    return to_json(plainify(flatten_dict(dictionary)))
 
-        keys = data1.keys() | data2.keys()
-        result = {}
-        for key in keys:
-            if key not in data1:
-                result[key] = {'status': 'added', 'value': inner(data2[key])[0]}
-            elif key not in data2:
-                result[key] = {'status': 'removed'}
-            elif isinstance(data2[key], dict):
-                result[key] = inner(data1[key], data2[key])
-            elif data1[key] != data2[key]:
-                result[key] = {
-                    'status': 'updated',
-                    'old value': inner(data1[key], data2[key])[0],
-                    'new value': inner(data1[key], data2[key])[1]
-                }
-        return dict(sorted(result.items(), key=lambda x: x[0]))
 
-    return to_json(plain_stringify(flatten_dict(inner(file1, file2))))
+def need_quote(value):
+    return f"{value}" if value in NONSTRINGS else f"'{value}'"
+
+
+def plainify(dictionary):
+    for value in dictionary.values():
+        for key in value.keys():
+            if 'value' in key and isinstance(value[key], dict):
+                value[key] = '[complex value]'
+    result = []
+    for key, val in dictionary.items():
+        pattern = f"Property '{key}' was {val['status']}"
+        if val['status'] == 'added':
+            value = need_quote(val['value'])
+            result.append(f"{pattern} with value: {value}")
+        elif val['status'] == 'removed':
+            result.append(f"{pattern}")
+        elif val['status'] == 'updated':
+            old_val = need_quote(val['old value'])
+            new_val = need_quote(val['new value'])
+            result.append(f"{pattern}. From {old_val} to {new_val}")
+    return '\n'.join(result)
 
 
 def flatten_dict(dictionary, parent_key='', sep='.'):

@@ -1,44 +1,86 @@
 {
-    "  common": {
-        "+ follow": false,
-        "  setting1": "Value 1",
-        "- setting2": 200,
-        "- setting3": true,
-        "+ setting3": null,
-        "+ setting4": "blah blah",
-        "+ setting5": {
-            "  key5": "value5"
+    "common": {
+        "follow": {
+            "status": "added",
+            "value": false
         },
-        "  setting6": {
-            "  doge": {
-                "- wow": "",
-                "+ wow": "so much"
-            },
-            "  key": "value",
-            "+ ops": "vops"
-        }
-    },
-    "  group1": {
-        "- baz": "bas",
-        "+ baz": "bars",
-        "  foo": "bar",
-        "- nest": {
-            "  key": "value"
+        "setting1": {
+            "status": "no change",
+            "value": "Value 1"
         },
-        "+ nest": "str"
-    },
-    "- group2": {
-        "  abc": 12345,
-        "  deep": {
-            "  id": 45
-        }
-    },
-    "+ group3": {
-        "  deep": {
-            "  id": {
-                "  number": 45
+        "setting2": {
+            "status": "removed",
+            "value": 200
+        },
+        "setting3": {
+            "status": "updated",
+            "old value": true,
+            "new value": null
+        },
+        "setting4": {
+            "status": "added",
+            "value": "blah blah"
+        },
+        "setting5": {
+            "status": "added",
+            "value": {
+                "key5": "value5"
             }
         },
-        "  fee": 100500
+        "setting6": {
+            "doge": {
+                "wow": {
+                    "status": "updated",
+                    "old value": "",
+                    "new value": "so much"
+                }
+            },
+            "key": {
+                "status": "no change",
+                "value": "value"
+            },
+            "ops": {
+                "status": "added",
+                "value": "vops"
+            }
+        }
+    },
+    "group1": {
+        "baz": {
+            "status": "updated",
+            "old value": "bas",
+            "new value": "bars"
+        },
+        "foo": {
+            "status": "no change",
+            "value": "bar"
+        },
+        "nest": {
+            "status": "updated",
+            "old value": {
+                "key": "value"
+            },
+            "new value": "str"
+        }
+    },
+    "group2": {
+        "status": "removed",
+        "value": {
+            "abc": 12345,
+            "deep": {
+                "id": 45
+            }
+        }
+    },
+    "group3": {
+        "status": "added",
+        "value": {
+            "deep": {
+                "id": {
+                    "number": 45
+                }
+            },
+            "fee": 100500
+        }
     }
 }
