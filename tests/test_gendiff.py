@@ -23,10 +23,13 @@ def test_stylish_flat():
 
 
 def test_stilysh_nested():    
-    expected = read(get_fixture_path('stylish_nested_result.txt'))
+    expected = read(get_fixture_path('stylish_nested_result1.txt'))
     assert generate_diff(get_fixture_path('nested1.json'), get_fixture_path('nested2.json')) == expected
     assert generate_diff(get_fixture_path('nested1.yml'), get_fixture_path('nested2.yml')) == expected
     assert generate_diff(get_fixture_path('nested1.yml'), get_fixture_path('nested2.json')) == expected
+
+    expected = read(get_fixture_path('stylish_nested_result2.txt'))
+    assert generate_diff(get_fixture_path('nested1.json'), get_fixture_path('nested3.json')) == expected
 
 
 def test_plain_flat():

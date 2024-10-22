@@ -1,4 +1,4 @@
-from .formatters import make_stylish, make_plain
+from gendiff.formatters import make_stylish, make_plain
 import json
 from gendiff.parsing import parse
 
@@ -22,7 +22,7 @@ def generate_diff(file_path1, file_path2, format_name='stylish'):
                         'status': 'removed',
                         'value': inner(data1[key])[0]
                     }
-                elif isinstance(data2[key], dict):
+                elif isinstance(data1[key], dict) and isinstance(data2[key], dict):
                     result[key] = inner(data1[key], data2[key])
                 elif data1[key] != data2[key]:
                     result[key] = {
