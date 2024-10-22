@@ -2,11 +2,13 @@ from gendiff.parsing import to_json
 import itertools
 
 
-def make_stylish(dictionary):
+def make_stylish(dictionary: dict) -> str:
+    """Apply stylish formatter to diff dictionary"""
     return to_json(stringify(dictionary))
 
 
-def stringify(value, replacer=' ', spaces_count=2):
+def stringify(value: dict, replacer: str=' ', spaces_count: int=2) -> str:
+    """Convert diff dictionary into stylish text"""
 
     def iter_(current_value, depth):
         if not isinstance(current_value, dict):

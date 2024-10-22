@@ -3,9 +3,12 @@ import json
 from gendiff.parsing import parse
 
 
-def generate_diff(file_path1, file_path2, format_name='stylish'):
-    file1 = parse(file_path1)
-    file2 = parse(file_path2)
+def generate_diff(file_path1: str, file_path2: str, format_name: str='stylish') -> str:
+    """
+    Return text that describes difference between two given files
+    using 3 formatters - stylish, plain or json.
+    """
+    file1, file2 = parse(file_path1), parse(file_path2)
 
     def inner(data1, data2=None):
 
