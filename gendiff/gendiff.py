@@ -3,7 +3,7 @@ import json
 from gendiff.parsing import parse
 
 
-def generate_diff(file_path1: str, file_path2: str, format_name: str='stylish') -> str:
+def generate_diff(file_path1: str, file_path2: str, format_name: str = 'stylish') -> str:
     """
     Return text that describes difference between two given files
     using 3 formatters - stylish, plain or json.

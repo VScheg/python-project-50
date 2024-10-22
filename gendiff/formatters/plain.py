@@ -36,9 +36,9 @@ def plainify(dictionary: dict) -> str:
     return '\n'.join(result)
 
 
-def flatten_dict(dictionary: dict, parent_key: str='', sep: str='.') -> dict:
+def flatten_dict(dictionary: dict, parent_key: str = '', sep: str = '.') -> dict:
     """
-    Flatten nested dictionary so that 
+    Flatten nested dictionary so that
     it may only contain dictionaries describing difference
     """
     flattened = {}
