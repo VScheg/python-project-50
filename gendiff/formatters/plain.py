@@ -1,7 +1,7 @@
 from typing import Union
 
 
-NONSTRINGS = ['true', 'false', 'null', '[complex value]', '0']
+NONSTRINGS = [True, False, None, '[complex value]']
 
 
 def make_plain(dictionary: dict) -> str:

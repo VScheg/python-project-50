@@ -3,20 +3,17 @@ from gendiff.parsing import parse
 
 
 DICT_TO_JSON = {
-    None: 'null',
-    True: 'true',
-    False: 'false',
+    'None': 'null',
+    'True': 'true',
+    'False': 'false',
 }
 
 
-def to_json(data: dict) -> dict:
-    """Replace Boolean and NoneType values to JSON equivalent"""
-    if isinstance(data, bool) or data is None:
-        return str(data).replace(str(data), DICT_TO_JSON[data])
-    elif isinstance(data, dict):
-        return {k: to_json(v) for k, v in data.items()}
-    else:
-        return data
+def to_json(string: str) -> str:
+    """Convert text into JSON-style text"""
+    for key, value in DICT_TO_JSON.items():
+        string = string.replace(key, value)
+    return string
 
 
 def generate_diff(file_path1: str, file_path2: str, format_name: str = 'stylish') -> str:
@@ -55,12 +52,12 @@ def generate_diff(file_path1: str, file_path2: str, format_name: str = 'stylish'
                     'value': data1[key]
                 }
 
-        return to_json(dict(sorted(result.items(), key=lambda x: x[0])))
+        return dict(sorted(result.items(), key=lambda x: x[0]))
 
     match format_name:
         case 'stylish':
-            return make_stylish(inner(file1, file2))
+            return to_json(make_stylish(inner(file1, file2)))
         case 'plain':
-            return make_plain(inner(file1, file2))
+            return to_json(make_plain(inner(file1, file2)))
         case 'json':
             return make_json(inner(file1, file2))
