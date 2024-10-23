@@ -1,10 +1,9 @@
-from gendiff.parsing import to_json
 import itertools
 
 
 def make_stylish(dictionary: dict) -> str:
     """Apply stylish formatter to diff dictionary"""
-    return to_json(stringify(dictionary))
+    return stringify(dictionary)
 
 
 def stringify(value: dict, replacer: str = ' ', spaces_count: int = 2) -> str:

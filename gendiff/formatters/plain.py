@@ -1,13 +1,12 @@
-from gendiff.parsing import to_json
 from typing import Union
 
 
-NONSTRINGS = [True, False, None, '[complex value]']
+NONSTRINGS = ['true', 'false', 'null', '[complex value]']
 
 
 def make_plain(dictionary: dict) -> str:
     """Apply plain formatter to diff dictionary"""
-    return to_json(plainify(flatten_dict(dictionary)))
+    return plainify(flatten_dict(dictionary))
 
 
 def need_quote(value: Union[str, bool, None]) -> str:

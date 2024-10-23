@@ -2,7 +2,9 @@ import argparse
 
 
 def get_arguments():
-    """Get arguments for gendiff program from command line and form documentation"""
+    """
+    Get arguments for gendiff program from command line and form documentation.
+    """
     parser = argparse.ArgumentParser(
         prog="gendiff",
         description="Compares two configuration files and shows a difference."
