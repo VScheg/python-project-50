@@ -11,7 +11,7 @@ DICT_TO_JSON = {
 
 def to_json(data: dict) -> dict:
     """Replace Boolean and NoneType values to JSON equivalent"""
-    if isinstance(data, bool) or data is None and not isinstance(data, int):
+    if isinstance(data, bool) or data is None:
         return str(data).replace(str(data), DICT_TO_JSON[data])
     elif isinstance(data, dict):
         return {k: to_json(v) for k, v in data.items()}
