@@ -1,19 +1,5 @@
-from gendiff.formatters import make_stylish, make_plain, make_json
 from gendiff.parsing import parse
-
-
-DICT_TO_JSON = {
-    'None': 'null',
-    'True': 'true',
-    'False': 'false',
-}
-
-
-def to_json(string: str) -> str:
-    """Convert text into JSON-style text"""
-    for key, value in DICT_TO_JSON.items():
-        string = string.replace(key, value)
-    return string
+from gendiff.apply_formatter import apply_formatter
 
 
 def generate_diff(file_path1: str, file_path2: str, format_name: str = 'stylish') -> str:
@@ -54,10 +40,4 @@ def generate_diff(file_path1: str, file_path2: str, format_name: str = 'stylish'
 
         return dict(sorted(result.items(), key=lambda x: x[0]))
 
-    match format_name:
-        case 'stylish':
-            return to_json(make_stylish(inner(file1, file2)))
-        case 'plain':
-            return to_json(make_plain(inner(file1, file2)))
-        case 'json':
-            return make_json(inner(file1, file2))
+    return apply_formatter(inner(file1, file2), format_name)

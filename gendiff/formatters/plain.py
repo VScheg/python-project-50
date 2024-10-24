@@ -44,7 +44,7 @@ def flatten_dict(dictionary: dict, parent_key: str = '', sep: str = '.') -> dict
     for key, value in dictionary.items():
         new_key = f"{parent_key}{sep}{key}" if parent_key else key
         if isinstance(value, dict) and 'status' not in value:
-            flattened.update(flatten_dict(value, new_key, sep=sep))
+            flattened.update(flatten_dict(value, new_key, sep))
         else:
             flattened[new_key] = value
     return flattened
