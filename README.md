@@ -3,7 +3,6 @@
 ### My tests and linter status:
 [![Python CI](https://github.com/VScheg/python-project-50/actions/workflows/pyci.yml/badge.svg)](https://github.com/VScheg/python-project-50/actions/workflows/pyci.yml)
 ### CodeClimate
-[![Maintainability](https://api.codeclimate.com/v1/badges/c7141d81a25f88f931f8/maintainability)](https://codeclimate.com/github/VScheg/python-project-50/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/c7141d81a25f88f931f8/test_coverage)](https://codeclimate.com/github/VScheg/python-project-50/test_coverage)
 
 ### Description
