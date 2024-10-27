@@ -14,12 +14,18 @@ def need_quote(value: Union[str, bool, None]) -> str:
     return f"{value}" if value in NONSTRINGS else f"'{value}'"
 
 
+def convert_dict_value(dictionary: dict) -> dict:
+    """Shorten dict value in diff dictionary to '[complex value]'"""
+    for diff in dictionary.values():
+        for key in diff.keys():
+            if 'value' in key and isinstance(diff[key], dict):
+                diff[key] = '[complex value]'
+    return dictionary
+
+
 def plainify(dictionary: dict) -> str:
     """Convert diff dictionary into plain text"""
-    for value in dictionary.values():
-        for key in value.keys():
-            if 'value' in key and isinstance(value[key], dict):
-                value[key] = '[complex value]'
+    convert_dict_value(dictionary)
     result = []
     for key, val in dictionary.items():
         pattern = f"Property '{key}' was {val['status']}"
@@ -35,16 +41,16 @@ def plainify(dictionary: dict) -> str:
     return '\n'.join(result)
 
 
-def flatten_dict(dictionary: dict, parent_key: str = '', sep: str = '.') -> dict:
+def flatten_dict(dictionary: dict, parent_key: str = '') -> dict:
     """
     Flatten nested dictionary so that
     it may only contain dictionaries describing difference
     """
     flattened = {}
     for key, value in dictionary.items():
-        new_key = f"{parent_key}{sep}{key}" if parent_key else key
+        new_key = f"{parent_key}.{key}" if parent_key else key
         if isinstance(value, dict) and 'status' not in value:
-            flattened.update(flatten_dict(value, new_key, sep))
+            flattened.update(flatten_dict(value, new_key))
         else:
             flattened[new_key] = value
     return flattened

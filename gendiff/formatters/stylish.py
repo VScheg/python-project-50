@@ -1,12 +1,7 @@
 import itertools
 
 
-def make_stylish(dictionary: dict) -> str:
-    """Apply stylish formatter to diff dictionary"""
-    return stringify(dictionary)
-
-
-def stringify(value: dict, replacer: str = ' ', spaces_count: int = 2) -> str:
+def make_stylish(value: dict, replacer: str = ' ', spaces_count: int = 2) -> str:
     """Convert diff dictionary into stylish text"""
 
     def iter_(current_value, depth):
