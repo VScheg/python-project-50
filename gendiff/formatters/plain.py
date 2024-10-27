@@ -16,16 +16,16 @@ def need_quote(value: Union[str, bool, None]) -> str:
 
 def convert_dict_value(dictionary: dict) -> dict:
     """Shorten dict value in diff dictionary to '[complex value]'"""
-    for diff in dictionary.values():
-        for key in diff.keys():
-            if 'value' in key and isinstance(diff[key], dict):
-                diff[key] = '[complex value]'
+    for key in dictionary.keys():
+        if 'value' in key and isinstance(dictionary[key], dict):
+            dictionary[key] = '[complex value]'
     return dictionary
 
 
 def plainify(dictionary: dict) -> str:
     """Convert diff dictionary into plain text"""
-    convert_dict_value(dictionary)
+    for diff in dictionary.values():
+        convert_dict_value(diff)
     result = []
     for key, val in dictionary.items():
         pattern = f"Property '{key}' was {val['status']}"
