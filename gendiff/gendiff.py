@@ -1,5 +1,5 @@
 from gendiff.parsing import parse, get_text_format
-from gendiff.apply_formatter import apply_formatter
+from gendiff.formatters import apply_formatter
 from gendiff.diff_dict import generate_diff_dict
 
 

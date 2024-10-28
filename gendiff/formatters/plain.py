@@ -11,7 +11,10 @@ def make_plain(dictionary: dict) -> str:
 
 def need_quote(value: Union[str, bool, None]) -> str:
     """Check if value is a string and needs quotes for plain text"""
-    return f"{value}" if value in NONSTRINGS else f"'{value}'"
+    if value in NONSTRINGS or isinstance(value, int):
+        return f"{value}"
+    else:
+        return f"'{value}'"
 
 
 def convert_dict_value(dictionary: dict) -> dict:

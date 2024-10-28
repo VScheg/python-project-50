@@ -1,3 +1,10 @@
+DICT_TO_JSON = {
+    None: 'null',
+    True: 'true',
+    False: 'false',
+}
+
+
 def generate_diff_dict(data_1: dict, data_2: dict) -> dict:
     """Return data that describes difference between two dictionaries"""
     keys = data_1.keys() | data_2.keys()
@@ -28,13 +35,6 @@ def generate_diff_dict(data_1: dict, data_2: dict) -> dict:
             }
 
     return to_json(dict(sorted(result.items(), key=lambda x: x[0])))
-
-
-DICT_TO_JSON = {
-    None: 'null',
-    True: 'true',
-    False: 'false',
-}
 
 
 def to_json(data: dict) -> dict:
