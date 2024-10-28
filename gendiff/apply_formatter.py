@@ -19,8 +19,8 @@ def apply_formatter(dictionary: dict, format_name: str) -> str:
     """Apply formatter to dictionary"""
     match format_name:
         case 'stylish':
-            return to_json(make_stylish(dictionary))
+            return make_stylish(dictionary)
         case 'plain':
-            return to_json(make_plain(dictionary))
+            return make_plain(dictionary)
         case 'json':
             return make_json(dictionary)

@@ -2,7 +2,7 @@
     common: {
       + follow: false
         setting1: Value 1
-      - setting2: 200
+      - setting2: 0
       - setting3: true
       + setting3: {
             key: value

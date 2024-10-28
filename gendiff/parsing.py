@@ -2,10 +2,14 @@ import json
 import yaml
 
 
-def parse(file_path: str) -> dict:
+def parse(data: str, text_format: str) -> dict:
     """Return a dictionary with contents of given JSON or YML file"""
-    _, f = file_path.split('.')
-    if f == 'json':
-        return json.load(open(file_path))
+    if text_format == 'json':
+        return json.load(data)
     else:
-        return yaml.safe_load(open(file_path))
+        return yaml.safe_load(data)
+
+
+def get_text_format(file_path: str) -> str:
+    _, f = file_path.split('.')
+    return f

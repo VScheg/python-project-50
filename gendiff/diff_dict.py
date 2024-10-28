@@ -27,4 +27,21 @@ def generate_diff_dict(data_1: dict, data_2: dict) -> dict:
                 'value': data_1[key]
             }
 
-    return dict(sorted(result.items(), key=lambda x: x[0]))
+    return to_json(dict(sorted(result.items(), key=lambda x: x[0])))
+
+
+DICT_TO_JSON = {
+    None: 'null',
+    True: 'true',
+    False: 'false',
+}
+
+
+def to_json(data: dict) -> dict:
+    """Replace Boolean and NoneType values to JSON equivalent"""
+    if isinstance(data, bool) or data is None:
+        return str(data).replace(str(data), DICT_TO_JSON[data])
+    elif isinstance(data, dict):
+        return {k: to_json(v) for k, v in data.items()}
+    else:
+        return data
