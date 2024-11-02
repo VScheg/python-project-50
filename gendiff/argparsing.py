@@ -1,7 +1,8 @@
 import argparse
+from typing import Optional
 
 
-def get_arguments():
+def get_arguments() -> tuple[str, str, Optional[str]]:
     """
     Get arguments for gendiff program from command line and form documentation.
     """
@@ -13,8 +14,7 @@ def get_arguments():
     parser.add_argument("second_file")
     parser.add_argument("-f", "--format", help="set format of output")
     args = parser.parse_args()
-    arguments = [args.first_file, args.second_file]
     if args.format:
-        arguments.append(args.format)
-
-    return arguments
+        return args.first_file, args.second_file, args.format
+    else:
+        return args.first_file, args.second_file, None

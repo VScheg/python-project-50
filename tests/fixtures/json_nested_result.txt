@@ -1,74 +1,101 @@
 {
     "common": {
-        "follow": {
-            "status": "added",
-            "value": "false"
-        },
-        "setting1": {
-            "status": "no change",
-            "value": "Value 1"
-        },
-        "setting2": {
-            "status": "removed",
-            "value": 0
-        },
-        "setting3": {
-            "status": "updated",
-            "old value": "true",
-            "new value": "null"
-        },
-        "setting4": {
-            "status": "added",
-            "value": "blah blah"
-        },
-        "setting5": {
-            "status": "added",
-            "value": {
-                "key5": "value5"
-            }
-        },
-        "setting6": {
-            "doge": {
-                "wow": {
-                    "status": "updated",
-                    "old value": "",
-                    "new value": "so much"
+        "status": "inserted",
+        "value": {
+            "follow": {
+                "status": "added",
+                "value": false
+            },
+            "setting1": {
+                "status": "no change",
+                "value": "Value 1"
+            },
+            "setting2": {
+                "status": "removed",
+                "value": 0
+            },
+            "setting3": {
+                "status": "updated",
+                "old value": true,
+                "new value": null
+            },
+            "setting4": {
+                "status": "added",
+                "value": "blah blah"
+            },
+            "setting5": {
+                "status": "added",
+                "value": {
+                    "key5": {
+                        "status": "no change",
+                        "value": "value5"
+                    }
                 }
             },
-            "key": {
-                "status": "no change",
-                "value": "value"
-            },
-            "ops": {
-                "status": "added",
-                "value": "vops"
+            "setting6": {
+                "status": "inserted",
+                "value": {
+                    "doge": {
+                        "status": "inserted",
+                        "value": {
+                            "wow": {
+                                "status": "updated",
+                                "old value": "",
+                                "new value": "so much"
+                            }
+                        }
+                    },
+                    "key": {
+                        "status": "no change",
+                        "value": "value"
+                    },
+                    "ops": {
+                        "status": "added",
+                        "value": "vops"
+                    }
+                }
             }
         }
     },
     "group1": {
-        "baz": {
-            "status": "updated",
-            "old value": "bas",
-            "new value": "bars"
-        },
-        "foo": {
-            "status": "no change",
-            "value": "bar"
-        },
-        "nest": {
-            "status": "updated",
-            "old value": {
-                "key": "value"
+        "status": "inserted",
+        "value": {
+            "baz": {
+                "status": "updated",
+                "old value": "bas",
+                "new value": "bars"
             },
-            "new value": "str"
+            "foo": {
+                "status": "no change",
+                "value": "bar"
+            },
+            "nest": {
+                "status": "updated",
+                "old value": {
+                    "key": {
+                        "status": "no change",
+                        "value": "value"
+                    }
+                },
+                "new value": "str"
+            }
         }
     },
     "group2": {
         "status": "removed",
         "value": {
-            "abc": 12345,
+            "abc": {
+                "status": "no change",
+                "value": 12345
+            },
             "deep": {
-                "id": 45
+                "status": "inserted",
+                "value": {
+                    "id": {
+                        "status": "no change",
+                        "value": 45
+                    }
+                }
             }
         }
     },
@@ -76,11 +103,23 @@
         "status": "added",
         "value": {
             "deep": {
-                "id": {
-                    "number": 45
+                "status": "inserted",
+                "value": {
+                    "id": {
+                        "status": "inserted",
+                        "value": {
+                            "number": {
+                                "status": "no change",
+                                "value": 45
+                            }
+                        }
+                    }
                 }
             },
-            "fee": 100500
+            "fee": {
+                "status": "no change",
+                "value": 100500
+            }
         }
     }
 }

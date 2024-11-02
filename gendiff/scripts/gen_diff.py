@@ -4,8 +4,11 @@ from gendiff import generate_diff
 
 
 def main():
-    args = get_arguments()
-    print(generate_diff(*args))
+    file_1, file_2, format_name = get_arguments()
+    if not format_name:
+        print(generate_diff(file_1, file_2))
+    else:
+        print(generate_diff(file_1, file_2, format_name))
 
 
 if __name__ == "__main__":

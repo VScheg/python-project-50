@@ -1,59 +1,32 @@
-from typing import Union
+import json
 
 
-NONSTRINGS = ['true', 'false', 'null', '[complex value]']
-
-
-def make_plain(dictionary: dict) -> str:
-    """Apply plain formatter to diff dictionary"""
-    return plainify(flatten_dict(dictionary))
-
-
-def need_quote(value: Union[str, bool, None]) -> str:
-    """Check if value is a string and needs quotes for plain text"""
-    if value in NONSTRINGS or isinstance(value, int):
-        return f"{value}"
+def apply_type(value: str | bool | None) -> str:
+    """Check type of value to apply certain style for plain text"""
+    if isinstance(value, dict):
+        return "[complex value]"
+    elif isinstance(value, int | bool | None):
+        return f"{json.dumps(value)}"
     else:
         return f"'{value}'"
 
 
-def convert_dict_value(dictionary: dict) -> dict:
-    """Shorten dict value in diff dictionary to '[complex value]'"""
-    for key in dictionary.keys():
-        if 'value' in key and isinstance(dictionary[key], dict):
-            dictionary[key] = '[complex value]'
-    return dictionary
-
-
-def plainify(dictionary: dict) -> str:
+def make_plain(dictionary: dict, parent_key: str = '') -> str:
     """Convert diff dictionary into plain text"""
-    for diff in dictionary.values():
-        convert_dict_value(diff)
     result = []
     for key, val in dictionary.items():
-        pattern = f"Property '{key}' was {val['status']}"
+        new_key = f"{parent_key}.{key}" if parent_key else key
+        pattern = f"Property '{new_key}' was {val['status']}"
         if val['status'] == 'added':
-            value = need_quote(val['value'])
+            value = apply_type(val['value'])
             result.append(f"{pattern} with value: {value}")
         elif val['status'] == 'removed':
             result.append(f"{pattern}")
         elif val['status'] == 'updated':
-            old_val = need_quote(val['old value'])
-            new_val = need_quote(val['new value'])
+            old_val = apply_type(val['old value'])
+            new_val = apply_type(val['new value'])
             result.append(f"{pattern}. From {old_val} to {new_val}")
+        elif val['status'] == 'inserted':
+            result.append(make_plain(val['value'], new_key))
+
     return '\n'.join(result)
-
-
-def flatten_dict(dictionary: dict, parent_key: str = '') -> dict:
-    """
-    Flatten nested dictionary so that
-    it may only contain dictionaries describing difference
-    """
-    flattened = {}
-    for key, value in dictionary.items():
-        new_key = f"{parent_key}.{key}" if parent_key else key
-        if isinstance(value, dict) and 'status' not in value:
-            flattened.update(flatten_dict(value, new_key))
-        else:
-            flattened[new_key] = value
-    return flattened

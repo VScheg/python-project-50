@@ -10,3 +10,5 @@ def apply_formatter(dictionary: dict, format_name: str) -> str:
             return make_plain(dictionary)
         case 'json':
             return make_json(dictionary)
+        case _:
+            return 'Wrong format'
