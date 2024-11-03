@@ -24,7 +24,18 @@ def convert_to_json(data: dict) -> dict:
         return data
 
 
-def make_stylish(value: dict, replacer: str = REPLACER, spaces_count: int = SPACES_COUNT) -> str:
+def get_indent(depth):
+    if depth == 0:
+        deep_indent_size = depth + SPACES_COUNT
+        current_indent = ''
+    else:
+        deep_indent_size = depth + (SPACES_COUNT * 2)
+        current_indent = REPLACER * (depth + SPACES_COUNT)
+    deep_indent = REPLACER * deep_indent_size
+    return deep_indent_size, current_indent, deep_indent
+
+
+def make_stylish(value: dict) -> str:
     """Convert diff dictionary into stylish text"""
     value = convert_to_json(value)
 
@@ -32,13 +43,7 @@ def make_stylish(value: dict, replacer: str = REPLACER, spaces_count: int = SPAC
         if not isinstance(current_value, dict):
             return str(current_value)
 
-        if depth == 0:
-            deep_indent_size = depth + spaces_count
-            current_indent = ''
-        else:
-            deep_indent_size = depth + (spaces_count * 2)
-            current_indent = replacer * (depth + spaces_count)
-        deep_indent = replacer * deep_indent_size
+        deep_indent_size, current_indent, deep_indent = get_indent(depth)
 
         lines = []
         for key, val in current_value.items():
