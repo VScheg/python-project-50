@@ -19,9 +19,7 @@ def convert_to_json(data: dict) -> dict:
     elif isinstance(data, dict):
         for key, val in data.items():
             data[key] = convert_to_json(val)
-        return data
-    else:
-        return data
+    return data
 
 
 def get_indent(depth):
