@@ -26,10 +26,7 @@
             "setting5": {
                 "status": "added",
                 "value": {
-                    "key5": {
-                        "status": "no change",
-                        "value": "value5"
-                    }
+                    "key5": "value5"
                 }
             },
             "setting6": {
@@ -72,10 +69,7 @@
             "nest": {
                 "status": "updated",
                 "old value": {
-                    "key": {
-                        "status": "no change",
-                        "value": "value"
-                    }
+                    "key": "value"
                 },
                 "new value": "str"
             }
@@ -84,18 +78,9 @@
     "group2": {
         "status": "removed",
         "value": {
-            "abc": {
-                "status": "no change",
-                "value": 12345
-            },
+            "abc": 12345,
             "deep": {
-                "status": "inserted",
-                "value": {
-                    "id": {
-                        "status": "no change",
-                        "value": 45
-                    }
-                }
+                "id": 45
             }
         }
     },
@@ -103,23 +88,11 @@
         "status": "added",
         "value": {
             "deep": {
-                "status": "inserted",
-                "value": {
-                    "id": {
-                        "status": "inserted",
-                        "value": {
-                            "number": {
-                                "status": "no change",
-                                "value": 45
-                            }
-                        }
-                    }
+                "id": {
+                    "number": 45
                 }
             },
-            "fee": {
-                "status": "no change",
-                "value": 100500
-            }
+            "fee": 100500
         }
     }
 }

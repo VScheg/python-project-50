@@ -1,7 +1,7 @@
 import json
 
 
-def apply_type(value: str | bool | None) -> str:
+def stringify(value: str | bool | None) -> str:
     """Check type of value to apply certain style for plain text"""
     if isinstance(value, dict):
         return "[complex value]"
@@ -14,19 +14,21 @@ def apply_type(value: str | bool | None) -> str:
 def make_plain(dictionary: dict, parent_key: str = '') -> str:
     """Convert diff dictionary into plain text"""
     result = []
-    for key, val in dictionary.items():
+    for key, value in dictionary.items():
         new_key = f"{parent_key}.{key}" if parent_key else key
-        pattern = f"Property '{new_key}' was {val['status']}"
-        if val['status'] == 'added':
-            value = apply_type(val['value'])
-            result.append(f"{pattern} with value: {value}")
-        elif val['status'] == 'removed':
+        status = value.get('status')
+        pattern = f"Property '{new_key}' was {status}"
+        if status == 'added':
+            result.append(
+                f"{pattern} with value: {stringify(value.get('value'))}"
+            )
+        elif status == 'removed':
             result.append(f"{pattern}")
-        elif val['status'] == 'updated':
-            old_val = apply_type(val['old value'])
-            new_val = apply_type(val['new value'])
-            result.append(f"{pattern}. From {old_val} to {new_val}")
-        elif val['status'] == 'inserted':
-            result.append(make_plain(val['value'], new_key))
+        elif status == 'updated':
+            old_value = stringify(value.get('old value'))
+            new_value = stringify(value.get('new value'))
+            result.append(f"{pattern}. From {old_value} to {new_value}")
+        elif status == 'inserted':
+            result.append(make_plain(value.get('value'), new_key))
 
     return '\n'.join(result)

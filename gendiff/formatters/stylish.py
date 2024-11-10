@@ -2,7 +2,7 @@ import itertools
 import json
 
 
-MARKERS = {
+DIFF_SYMBOLS = {
     'added': '+ ',
     'removed': '- ',
     'no change': '  ',
@@ -16,47 +16,42 @@ def convert_to_json(data: dict) -> dict:
     """Replace Boolean and NoneType values with JSON equivalent"""
     if isinstance(data, bool | None):
         return json.dumps(data)
-    elif isinstance(data, dict):
-        for key, val in data.items():
-            data[key] = convert_to_json(val)
-    return data
+    return str(data)
 
 
 def get_indent(depth):
-    if depth == 0:
-        deep_indent_size = depth + SPACES_COUNT
-        current_indent = ''
-    else:
-        deep_indent_size = depth + (SPACES_COUNT * 2)
-        current_indent = REPLACER * (depth + SPACES_COUNT)
+    deep_indent_size = depth + SPACES_COUNT * 2
     deep_indent = REPLACER * deep_indent_size
-    return deep_indent_size, current_indent, deep_indent
+    return deep_indent_size, deep_indent
 
 
 def make_stylish(value: dict) -> str:
     """Convert diff dictionary into stylish text"""
-    value = convert_to_json(value)
 
     def iter_(current_value, depth):
         if not isinstance(current_value, dict):
-            return str(current_value)
+            return convert_to_json(current_value)
 
-        deep_indent_size, current_indent, deep_indent = get_indent(depth)
+        def iter_dict(current_value, depth):
+            deep_indent_size, deep_indent = get_indent(depth)
+            return f"{deep_indent}  {key}: {iter_(current_value, deep_indent_size)}"
 
+        deep_indent_size, deep_indent = get_indent(depth)
         lines = []
         for key, val in current_value.items():
 
-            def make_line(status, value):
-                return f"{deep_indent}{MARKERS[status]}{key}: {iter_(value, deep_indent_size)}"
+            if isinstance(val, dict) and 'status' in val.keys():
+                status = val.get('status')
+                if status in DIFF_SYMBOLS:
+                    lines.append(f"{deep_indent}{DIFF_SYMBOLS[status]}{key}: {iter_(val['value'], deep_indent_size)}")
+                elif status == 'updated':
+                    lines.append(f"{deep_indent}{DIFF_SYMBOLS['removed']}{key}: {iter_(val['old value'], deep_indent_size)}")
+                    lines.append(f"{deep_indent}{DIFF_SYMBOLS['added']}{key}: {iter_(val['new value'], deep_indent_size)}")
+            else:
+                lines.append(iter_dict(val, depth))
 
-            status = val['status']
-            if status in MARKERS:
-                lines.append(make_line(status, val['value']))
-            elif status == 'updated':
-                lines.append(make_line('removed', val['old value']))
-                lines.append(make_line('added', val['new value']))
-
+        current_indent = REPLACER * (depth + SPACES_COUNT)
         result = itertools.chain("{", lines, [current_indent + "}"])
         return '\n'.join(result)
 
-    return iter_(value, 0)
+    return iter_(value, -2)
