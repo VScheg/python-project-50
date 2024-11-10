@@ -12,9 +12,10 @@ def get_arguments() -> tuple[str, str, Optional[str]]:
     )
     parser.add_argument("first_file")
     parser.add_argument("second_file")
-    parser.add_argument("-f", "--format", help="set format of output")
+    parser.add_argument(
+        "-f", "--format",
+        help="set format of output - stylish, plain or json",
+        default="stylish"
+    )
     args = parser.parse_args()
-    if args.format:
-        return args.first_file, args.second_file, args.format
-    else:
-        return args.first_file, args.second_file, None
+    return args.first_file, args.second_file, args.format

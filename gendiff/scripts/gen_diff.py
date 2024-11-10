@@ -4,11 +4,9 @@ from gendiff import generate_diff
 
 
 def main():
-    file_1, file_2, format_name = get_arguments()
-    if not format_name:
-        print(generate_diff(file_1, file_2))
-    else:
-        print(generate_diff(file_1, file_2, format_name))
+    """Print difference between two files"""
+    args = get_arguments()
+    print(generate_diff(args.file_1, args.file_2, args.format_name))
 
 
 if __name__ == "__main__":
