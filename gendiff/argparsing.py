@@ -1,8 +1,7 @@
 import argparse
-from typing import Optional
 
 
-def get_arguments() -> tuple[str, str, Optional[str]]:
+def get_arguments() -> tuple[str, str, str]:
     """
     Get arguments for gendiff program from command line and form documentation.
     """
@@ -17,5 +16,4 @@ def get_arguments() -> tuple[str, str, Optional[str]]:
         help="set format of output - stylish, plain or json",
         default="stylish"
     )
-    args = parser.parse_args()
-    return args.first_file, args.second_file, args.format
+    return parser.parse_args()
