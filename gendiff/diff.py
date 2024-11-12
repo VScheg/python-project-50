@@ -1,5 +1,14 @@
 def get_diff(data_1: dict, data_2: dict) -> dict:
-    """Return data that describes difference between two dictionaries"""
+    """Generates difference between two dictionaries.
+
+    Args:
+        data_1: First dictionary.
+        data_2: Second dictionary.
+
+    Returns:
+        Data that describes difference between two dictionaries.
+
+    """
     sorted_keys = sorted(data_1.keys() | data_2.keys())
     result = {}
     for key in sorted_keys:

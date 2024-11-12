@@ -2,6 +2,7 @@ import os
 
 
 def read(file_path: str) -> str:
+    """Read the file"""
     try:
         with open(file_path) as file:
             content = file.read()

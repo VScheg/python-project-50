@@ -19,7 +19,8 @@ def convert_to_json(data: dict) -> dict:
     return str(data)
 
 
-def get_indent(depth):
+def get_indent(depth: int) -> tuple[int, str]:
+    """Return size of deep indentation and deep indentation"""
     deep_indent_size = depth + SPACES_COUNT * 2
     deep_indent = REPLACER * deep_indent_size
     return deep_indent_size, deep_indent

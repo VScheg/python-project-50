@@ -12,7 +12,16 @@ def stringify(value: str | bool | None) -> str:
 
 
 def make_plain(dictionary: dict, parent_key: str = '') -> str:
-    """Convert diff dictionary into plain text"""
+    """Converts diff dictionary into plain text.
+
+    Args:
+        dictionary: Diff dictionary.
+        parent_key: String that keeps names of parent keys in dictionary.
+
+    Returns:
+        Plain text that describes difference between two files.
+
+    """
     result = []
     for key, value in dictionary.items():
         new_key = f"{parent_key}.{key}" if parent_key else key

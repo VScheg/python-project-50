@@ -4,7 +4,16 @@ from gendiff.formatters.json import make_json
 
 
 def apply_formatter(dictionary: dict, format_name: str) -> str:
-    """Convert dictionary to formatted string."""
+    """Converts dictionary to formatted string.
+
+    Args:
+        dictionary: Dictionary.
+        format_name: Name of format of output.
+
+    Returns:
+        Formatted string.
+
+    """
     match format_name:
         case 'stylish':
             return make_stylish(dictionary)
