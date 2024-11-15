@@ -22,4 +22,6 @@ def apply_formatter(dictionary: dict, format_name: str) -> str:
         case 'json':
             return make_json(dictionary)
         case _:
-            raise ValueError('Wrong format.')
+            raise ValueError(
+                'Wrong format. Format should be strylish, plain or json'
+            )

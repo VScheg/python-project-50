@@ -1,5 +1,6 @@
 import json
 
 
-def make_json(dictionary: dict) -> str:
-    return json.dumps(dictionary, indent=4)
+def make_json(diff: dict) -> str:
+    """Converts diff dictionary into json text."""
+    return json.dumps(diff, indent=4)
