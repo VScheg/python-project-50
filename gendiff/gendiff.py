@@ -1,11 +1,12 @@
-from gendiff.reading import read, get_text_format
+from gendiff.reading import parse, get_text_format
 from gendiff.parsing import get_data
 from gendiff.formatters.apply_formatter import apply_formatter
 from gendiff.diff import get_diff
 
 
 def generate_diff(file_1: str, file_2: str, format_name: str = 'stylish') -> str:
-    """Generates difference between two files.
+    """
+    Generates difference between two files.
 
     Args:
         file_1: File path of first file.
@@ -14,8 +15,7 @@ def generate_diff(file_1: str, file_2: str, format_name: str = 'stylish') -> str
 
     Returns:
         Text that describes difference between two files in chosen format - stylish, plain or json.
-
     """
-    dict_1 = get_data(read(file_1), get_text_format(file_1))
-    dict_2 = get_data(read(file_2), get_text_format(file_2))
-    return apply_formatter(get_diff(dict_1, dict_2), format_name)
+    data_1 = get_data(parse(file_1), get_text_format(file_1))
+    data_2 = get_data(parse(file_2), get_text_format(file_2))
+    return apply_formatter(get_diff(data_1, data_2), format_name)

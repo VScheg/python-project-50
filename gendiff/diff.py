@@ -1,5 +1,6 @@
 def get_diff(data_1: dict, data_2: dict) -> dict:
-    """Generates difference between two dictionaries.
+    """
+    Generates difference between two dictionaries.
 
     Args:
         data_1: First dictionary.
@@ -7,7 +8,6 @@ def get_diff(data_1: dict, data_2: dict) -> dict:
 
     Returns:
         Data that describes difference between two dictionaries.
-
     """
     sorted_keys = sorted(data_1.keys() | data_2.keys())
     result = {}
