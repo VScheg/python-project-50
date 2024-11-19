@@ -1,8 +1,8 @@
 import os
 
 
-def parse(file_path: str) -> str:
-    """Read the file."""
+def get_text(file_path: str) -> str:
+    """Get text from file."""
     with open(file_path) as file:
         return file.read()
 
