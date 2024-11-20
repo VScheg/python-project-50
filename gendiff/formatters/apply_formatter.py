@@ -3,11 +3,11 @@ from gendiff.formatters.plain import make_plain
 from gendiff.formatters.json import make_json
 
 
-def apply_formatter(dictionary: dict, format_name: str) -> str:
-    """Converts dictionary to formatted string.
+def apply_formatter(diff: dict, format_name: str) -> str:
+    """Converts diff dictionary to formatted string.
 
     Args:
-        dictionary: Dictionary.
+        diff: diff dictionary.
         format_name: Name of format of output.
 
     Returns:
@@ -16,11 +16,11 @@ def apply_formatter(dictionary: dict, format_name: str) -> str:
     """
     match format_name:
         case 'stylish':
-            return make_stylish(dictionary)
+            return make_stylish(diff)
         case 'plain':
-            return make_plain(dictionary)
+            return make_plain(diff)
         case 'json':
-            return make_json(dictionary)
+            return make_json(diff)
         case _:
             raise ValueError(
                 'Wrong format. Format should be strylish, plain or json'

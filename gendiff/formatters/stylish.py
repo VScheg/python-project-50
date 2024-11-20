@@ -47,12 +47,28 @@ def iter_diff(diff: dict, depth: int) -> str:
     for key, value in diff.items():
         status = value.get('status')
         if status in DIFF_SYMBOLS:
-            lines.append(f"{deep_indent}{DIFF_SYMBOLS.get(status)}{key}: {iter_value(value.get('value'), deep_indent_size)}")
+            lines.append("{}{}{}: {}".format(
+                deep_indent, DIFF_SYMBOLS.get(status), key, iter_value(
+                    value.get('value'), deep_indent_size
+                ))
+            )
         elif status == 'updated':
-            lines.append(f"{deep_indent}{DIFF_SYMBOLS.get('removed')}{key}: {iter_value(value.get('old value'), deep_indent_size)}")
-            lines.append(f"{deep_indent}{DIFF_SYMBOLS.get('added')}{key}: {iter_value(value.get('new value'), deep_indent_size)}")
+            lines.append("{}{}{}: {}".format(
+                deep_indent, DIFF_SYMBOLS.get('removed'), key, iter_value(
+                    value.get('old value'), deep_indent_size
+                ))
+            )
+            lines.append("{}{}{}: {}".format(
+                deep_indent, DIFF_SYMBOLS.get('added'), key, iter_value(
+                    value.get('new value'), deep_indent_size
+                ))
+            )
         elif status == 'inserted':
-            lines.append(f"{deep_indent}  {key}: {iter_diff(value.get('value'), deep_indent_size)}")
+            lines.append("{}  {}: {}".format(
+                deep_indent, key, iter_diff(
+                    value.get('value'), deep_indent_size
+                ))
+            )
 
     current_indent = REPLACER * (depth + SPACES_COUNT)
     result = itertools.chain("{", lines, [current_indent + "}"])
@@ -68,7 +84,9 @@ def iter_value(value: Any, depth: int) -> str:
 
     lines = []
     for key, value in value.items():
-        lines.append(f"{deep_indent}  {key}: {iter_value(value, deep_indent_size)}")
+        lines.append(
+            f"{deep_indent}  {key}: {iter_value(value, deep_indent_size)}"
+        )
 
     current_indent = REPLACER * (depth + SPACES_COUNT)
     result = itertools.chain("{", lines, [current_indent + "}"])
