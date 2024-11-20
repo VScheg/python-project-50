@@ -1,7 +1,11 @@
 import argparse
 
 
-FORMATTERS = ["stylish", "plain", "json"]
+FORMATTERS = (
+    "stylish",
+    "plain",
+    "json"
+)
 
 
 def get_arguments() -> tuple[str, str, str]:
