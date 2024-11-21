@@ -22,8 +22,9 @@ def get_diff(data_1: dict, data_2: dict) -> dict:
                 'status': 'removed',
                 'value': data_1.get(key)
             }
-        elif isinstance(data_1.get(key), dict) and isinstance(
-            data_2.get(key), dict
+        elif (
+            isinstance(data_1.get(key), dict)
+            and isinstance(data_2.get(key), dict)
         ):
             result[key] = {
                 'status': 'inserted',
