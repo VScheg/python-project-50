@@ -5,7 +5,9 @@ from gendiff.diff import get_diff
 
 
 def generate_diff(
-        file_1: str, file_2: str, format_name: str = 'stylish'
+        file_1: str,
+        file_2: str,
+        format_name: str = 'stylish',
 ) -> str:
     """
     Generates difference between two files.
