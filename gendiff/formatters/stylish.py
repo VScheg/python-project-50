@@ -47,27 +47,40 @@ def iter_diff(diff: dict, depth: int) -> str:
     for key, value in diff.items():
         status = value.get('status')
         if status in DIFF_SYMBOLS:
-            lines.append("{}{}{}: {}".format(
-                deep_indent, DIFF_SYMBOLS.get(status), key, iter_value(
-                    value.get('value'), deep_indent_size
-                ))
+            lines.append(
+                "{indent}{diff_symbol}{key_name}: {iter_}".format(
+                    indent=deep_indent,
+                    diff_symbol=DIFF_SYMBOLS.get(status),
+                    key_name=key,
+                    iter_=iter_value(value.get('value'), deep_indent_size)
+                )
             )
         elif status == 'updated':
-            lines.append("{}{}{}: {}".format(
-                deep_indent, DIFF_SYMBOLS.get('removed'), key, iter_value(
-                    value.get('old value'), deep_indent_size
-                ))
+            lines.append(
+                "{indent}{diff_symbol}{key_name}: {iter_}".format(
+                    indent=deep_indent,
+                    diff_symbol=DIFF_SYMBOLS.get('removed'),
+                    key_name=key,
+                    iter_=iter_value(
+                        value.get('old value'), deep_indent_size
+                    )
+                )
             )
-            lines.append("{}{}{}: {}".format(
-                deep_indent, DIFF_SYMBOLS.get('added'), key, iter_value(
-                    value.get('new value'), deep_indent_size
-                ))
+            lines.append(
+                "{indent}{diff_symbol}{key_name}: {iter_}".format(
+                    indent=deep_indent,
+                    diff_symbol=DIFF_SYMBOLS.get('added'),
+                    key_name=key,
+                    iter_=iter_value(value.get('new value'), deep_indent_size)
+                )
             )
         elif status == 'inserted':
-            lines.append("{}  {}: {}".format(
-                deep_indent, key, iter_diff(
-                    value.get('value'), deep_indent_size
-                ))
+            lines.append(
+                "{indent}  {key_name}: {iter_}".format(
+                    indent=deep_indent,
+                    key_name=key,
+                    iter_=iter_diff(value.get('value'), deep_indent_size)
+                )
             )
 
     current_indent = REPLACER * (depth + SPACES_COUNT)
